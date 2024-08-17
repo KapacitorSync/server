@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./db.sqlite"
+}
+
+model User {
+  id Int @id @default(autoincrement())
+
+  username String @unique
+  name     String
+
+  password String
+
+  sessions Session[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Token {
+  id Int @id @default(autoincrement())
+
+  token String
+
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+  updatedAt DateTime @default(now()) @updatedAt
+
+  Session Session[]
+}
+
+model Session {
+  id Int @id @default(autoincrement())
+
+  platform String @default("other")
+
+  Token   Token? @relation(fields: [tokenId], references: [id])
+  tokenId Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  User   User @relation(fields: [userId], references: [id])
+  userId Int
+}

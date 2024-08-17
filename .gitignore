@@ -1,0 +1,15 @@
+kapacitor.config.json
+
+.env*
+*.log*
+
+**/*.sqlite*
+**/*.db*
+
+src/metadata.ts
+
+dist/
+node_modules/
+
+.idea/
+.vscode/
